@@ -1,0 +1,310 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>J.V.SOFT... · Programación a medida</title>
+<meta name="description" content="Dashboards, automatizaciones y apps web a medida.">
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&family=VT323&display=swap');
+:root{--bg:#000;--panel:#07101a;--line:#12304a;--text:#f2f6fa;--mut:#8fb0c8;--blue:#22c8ff;--vio:#1e6cff;--pink:#7be7ff;--r:14px}
+.px{font-family:'Press Start 2P',monospace;color:var(--blue);letter-spacing:.02em}.px u{text-decoration:none;color:#fff}
+.st{display:flex;flex-direction:column;gap:2px;transform:skewX(-28deg)}.st b{display:block;height:4px;background:var(--vio);box-shadow:0 0 8px var(--vio)}
+.st b:nth-child(1){width:14px}.st b:nth-child(2){width:18px}.st b:nth-child(3){width:20px}.st b:nth-child(4){width:24px}
+.eyebrow{font:22px/1 'VT323',monospace;letter-spacing:.38em;color:var(--blue);margin-bottom:22px;text-shadow:0 0 12px var(--blue)}
+.term{margin-top:46px;font:22px/1 'VT323',monospace;letter-spacing:.1em;color:#cfe3f0}
+.cur{color:var(--blue);animation:parp 1s steps(1) infinite}@keyframes parp{50%{opacity:0}}
+.hero::after{content:"";position:absolute;inset:0;pointer-events:none;z-index:2;background:repeating-linear-gradient(0deg,rgba(0,0,0,.28) 0 1px,transparent 1px 3px);opacity:.35}
+#splash{position:fixed;inset:0;z-index:100;background:#000;display:grid;place-items:center;cursor:pointer;transition:opacity .8s}
+.lg{width:min(900px,92vw);animation:enciende 1.6s both}
+.lg-box{font-size:clamp(18px,5.6vw,60px);display:flex;align-items:center;gap:.7em;padding:.55em 0;border-top:.07em solid var(--blue);border-bottom:.07em solid var(--blue);box-shadow:0 0 30px rgba(34,200,255,.25)}
+.lg-box .st{gap:.09em;transform:skewX(-28deg);margin-left:.2em}
+.lg-box .st b{height:.14em;background:linear-gradient(90deg,var(--vio),var(--blue))}
+.lg-box .st b:nth-child(1){width:.7em}.lg-box .st b:nth-child(2){width:.85em}.lg-box .st b:nth-child(3){width:1em}.lg-box .st b:nth-child(4){width:1.15em}.lg-box .st b:nth-child(5){width:1.3em}
+.lg-t{font-size:1em;white-space:nowrap;text-shadow:0 0 18px rgba(34,200,255,.6)}
+.lg-tag{display:flex;align-items:center;gap:2vw;margin-top:7vh}
+.lg-tag i{flex:1;height:2px;background:var(--vio);box-shadow:0 0 8px var(--vio)}
+.lg-tag span{font:clamp(14px,2.7vw,30px)/1 'VT323',monospace;letter-spacing:.32em;color:var(--blue);text-shadow:0 0 10px var(--blue);white-space:nowrap}
+.lg-foot{text-align:right;margin-top:9vh;font:clamp(14px,2.2vw,24px)/1 'VT323',monospace;letter-spacing:.1em;color:#cfe3f0}
+#splash.off{opacity:0;pointer-events:none}
+@keyframes enciende{0%{opacity:0;filter:brightness(3) blur(6px)}30%{opacity:1}45%{opacity:.4}60%,100%{opacity:1;filter:none}}
+*{box-sizing:border-box}html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--text);font:17px/1.55 "Segoe UI",system-ui,sans-serif;overflow-x:hidden}
+a{color:inherit}
+header{position:fixed;inset:0 0 auto 0;z-index:20;display:flex;justify-content:center;align-items:center;padding:14px 28px;background:linear-gradient(#050608cc,transparent);backdrop-filter:blur(6px)}
+.logo{font-weight:700;letter-spacing:.02em;display:flex;gap:10px;align-items:center;text-decoration:none}
+.logo i{width:22px;height:22px;border-radius:7px;background:linear-gradient(135deg,var(--blue),var(--vio),var(--pink))}
+nav{display:flex;gap:26px}nav a{color:var(--mut);text-decoration:none;font-size:15px;transition:.2s}nav a:hover{color:#fff}
+@media(max-width:640px){nav{display:none}}
+.hero{position:relative;min-height:100vh;display:grid;place-items:center;text-align:center;padding:90px 20px 60px}
+#cv,#gl{position:absolute;inset:0;width:100%;height:100%}
+#gl{pointer-events:none;opacity:0;transition:opacity 1.6s}#gl.on{opacity:.8}
+.hero>div{position:relative;z-index:1;max-width:1000px}
+h1{font-size:clamp(40px,9vw,104px);line-height:1.02;letter-spacing:-.03em;margin:0;font-weight:600}
+.rot{display:inline-block;color:var(--blue);min-width:1ch;transition:opacity .35s,transform .35s,filter .35s}
+.rot.out{opacity:0;transform:translateY(-.3em);filter:blur(6px)}
+.lead{color:var(--mut);max-width:520px;margin:26px auto 34px;font-size:18px}
+.btn{display:inline-flex;gap:8px;align-items:center;background:#fff;color:#000;font-weight:600;border-radius:999px;padding:14px 28px;text-decoration:none;border:0;cursor:pointer;font-size:16px;transition:.25s}
+.btn:hover{transform:translateY(-3px) scale(1.03);box-shadow:0 0 40px rgba(34,200,255,.55)}
+.btn.g{background:transparent;color:#fff;border:1px solid var(--line);margin-left:10px}
+.btn.g:hover{box-shadow:none;border-color:var(--vio)}
+#logo3d{max-width:none;padding:0;border-top:1px solid var(--line);border-bottom:1px solid var(--line);background:radial-gradient(ellipse at 50% 50%,#04121f,#000 70%)}
+.l3wrap{position:relative;height:min(72vh,560px);min-height:300px;cursor:pointer}
+#l3{position:absolute;inset:0;width:100%;height:100%;display:block}
+.l3hint{position:absolute;bottom:14px;left:0;right:0;text-align:center;font:20px/1 'VT323',monospace;letter-spacing:.2em;color:var(--mut);pointer-events:none}
+.scroll{position:absolute;bottom:26px;left:50%;width:22px;height:36px;border:2px solid var(--line);border-radius:12px;transform:translateX(-50%);z-index:1}
+.scroll::after{content:"";position:absolute;left:50%;top:6px;width:3px;height:7px;background:#fff;border-radius:2px;transform:translateX(-50%);animation:rueda 1.6s infinite}
+@keyframes rueda{0%{opacity:0;top:5px}40%{opacity:1}100%{opacity:0;top:18px}}
+section{max-width:1100px;margin:0 auto;padding:90px 22px}
+h2{font-size:clamp(30px,5vw,52px);letter-spacing:-.02em;line-height:1.08;margin:0 0 14px;font-weight:600}
+.sec-sub{color:var(--mut);max-width:560px;margin:0 0 44px}
+.rv{opacity:0;transform:translateY(34px);transition:opacity .8s,transform .8s cubic-bezier(.2,.7,.2,1)}
+.rv.on{opacity:1;transform:none}
+.steps{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:18px}
+.step{background:var(--panel);border:1px solid var(--line);border-radius:var(--r);padding:28px;position:relative;overflow:hidden;transition:.3s}
+.step:hover{border-color:var(--vio);transform:translateY(-5px)}
+.step b{font-size:54px;font-weight:600;line-height:1;background:linear-gradient(135deg,var(--blue),var(--pink));-webkit-background-clip:text;background-clip:text;color:transparent}
+.step h3{margin:14px 0 6px;font-size:21px;font-weight:600}.step p{margin:0;color:var(--mut)}
+.tabs{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:26px}
+.tab{background:transparent;border:1px solid var(--line);color:var(--mut);border-radius:999px;padding:9px 18px;font:inherit;font-size:15px;cursor:pointer;transition:.2s}
+.tab:hover{color:#fff}.tab.on{background:#fff;color:#000;border-color:#fff}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:18px}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:var(--r);overflow:hidden;display:flex;flex-direction:column;transition:transform .3s,border-color .3s,opacity .4s}
+.card:hover{transform:translateY(-6px);border-color:var(--blue)}
+.card.hide{display:none}
+.vis{height:130px;position:relative;overflow:hidden}
+.vis::after{content:"";position:absolute;inset:0;background:radial-gradient(circle at 30% 20%,rgba(255,255,255,.25),transparent 55%)}
+.vis span{position:absolute;right:16px;bottom:10px;font-size:46px;z-index:1;transition:.4s}
+.card:hover .vis span{transform:scale(1.25) rotate(-8deg)}
+.cb{padding:20px 22px 24px;display:flex;flex-direction:column;gap:8px;flex:1}
+.cb h3{margin:0;font-size:20px;font-weight:600}.cb p{margin:0;color:var(--mut);font-size:15px;flex:1}
+.tag{font-size:12px;color:var(--mut);text-transform:uppercase;letter-spacing:.08em}
+.cb a,.cb em{font-size:14px;font-style:normal;color:var(--blue);text-decoration:none;font-weight:600}
+.cb em{color:var(--mut);font-weight:400}
+.faq details{border-bottom:1px solid var(--line);padding:20px 0}
+.faq summary{cursor:pointer;font-size:20px;list-style:none;display:flex;justify-content:space-between;gap:16px}
+.faq summary::-webkit-details-marker{display:none}
+.faq summary::after{content:"+";font-size:26px;line-height:1;color:var(--blue);transition:.3s}
+.faq details[open] summary::after{transform:rotate(45deg)}
+.faq p{color:var(--mut);margin:12px 0 0;max-width:760px;animation:abre .4s}
+@keyframes abre{from{opacity:0;transform:translateY(-8px)}}
+.cta{text-align:center;padding:120px 22px 140px;position:relative}
+.cta::before{content:"";position:absolute;left:50%;top:50%;width:520px;height:520px;max-width:100%;background:conic-gradient(from 0deg,var(--blue),var(--vio),var(--pink),var(--blue));filter:blur(110px);opacity:.25;transform:translate(-50%,-50%);animation:gira 18s linear infinite;z-index:-1}
+@keyframes gira{to{transform:translate(-50%,-50%) rotate(360deg)}}
+footer{border-top:1px solid var(--line);padding:30px 22px;text-align:center;color:var(--mut);font-size:14px}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}.rv{opacity:1;transform:none}}
+</style>
+</head>
+<body>
+<div id="splash"><div class="lg" role="img" aria-label="J.V.SOFT... Programando ideas desde 1986">
+  <div class="lg-box"><span class="st"><b></b><b></b><b></b><b></b><b></b></span><span class="lg-t px"><u>J.V.</u>SOFT...</span></div>
+  <div class="lg-tag"><i></i><span>PROGRAMANDO IDEAS DESDE 1986</span><i></i></div>
+  <div class="lg-foot">BASICAMENTE... SIEMPRE <span class="cur">_</span></div>
+</div></div>
+<script>
+(function(){const s=document.getElementById('splash');let visto=false;try{visto=sessionStorage.getItem('jv')}catch(e){}
+ if(visto||matchMedia('(prefers-reduced-motion:reduce)').matches){s.remove();return}
+ const cerrar=()=>{s.classList.add('off');setTimeout(()=>s.remove(),900);try{sessionStorage.setItem('jv','1')}catch(e){}};
+ s.onclick=cerrar;setTimeout(cerrar,2800)})();
+</script>
+<header>
+  <nav><a href="#como">Cómo trabajo</a><a href="#faq">Preguntas</a><a href="#contacto">Contacto</a></nav>
+</header>
+
+<div class="hero" id="top">
+  <canvas id="cv"></canvas>
+  <canvas id="gl"></canvas>
+  <div>
+    <div class="eyebrow">PROGRAMANDO IDEAS DESDE 1986</div>
+    <h1>Convierte tus ideas en<br><span class="rot" id="rot">software</span></h1>
+    <p class="lead">Programo dashboards, automatizaciones y aplicaciones web a medida para que tu trabajo diario sea más simple.</p>
+    <a class="btn" href="#como">✦ Cómo trabajo</a><a class="btn g" href="#contacto">Hablemos</a>
+    <div class="term">BASICAMENTE... SIEMPRE <span class="cur">_</span></div>
+  </div>
+  <div class="scroll"></div>
+</div>
+
+<section id="logo3d">
+  <div class="l3wrap"><canvas id="l3"></canvas><div class="l3hint">Mueve el mouse · haz clic para armarlo de nuevo</div></div>
+</section>
+
+<section id="como">
+  <h2 class="rv">Del problema a la solución</h2>
+  <p class="sec-sub rv">Un proceso corto y claro, sin vueltas técnicas.</p>
+  <div class="steps">
+    <div class="step rv"><b>1</b><h3>Cuéntame tu necesidad</h3><p>Describes qué te quita tiempo: un informe manual, una planilla enredada, una tarea repetitiva.</p></div>
+    <div class="step rv" style="transition-delay:.12s"><b>2</b><h3>Lo construyo y lo ves</h3><p>Armo una versión funcional rápido y la ajustamos juntos hasta que quede justo como la necesitas.</p></div>
+    <div class="step rv" style="transition-delay:.24s"><b>3</b><h3>Lo publicas y lo usas</h3><p>Queda en línea o en tu computador, listo para usar, con un enlace que cualquiera puede abrir.</p></div>
+  </div>
+</section>
+
+<section id="faq" class="faq">
+  <h2 class="rv">Preguntas frecuentes</h2>
+  <p class="sec-sub rv">Lo que suelen preguntarme antes de empezar.</p>
+  <div class="rv">
+    <details><summary>¿Qué tipo de cosas puedes programar?</summary><p>Dashboards con gráficos, calculadoras, formularios, cursos interactivos, informes automáticos y herramientas que conectan planillas, correos y sistemas internos.</p></details>
+    <details><summary>¿Necesito saber de tecnología?</summary><p>No. Me explicas lo que necesitas en palabras simples y yo me encargo de la parte técnica.</p></details>
+    <details><summary>¿Funciona en el celular?</summary><p>Sí. Todo se diseña para verse bien en celular, tablet y computador.</p></details>
+    <details><summary>¿Cuánto demora una herramienta?</summary><p>Una primera versión funcional suele estar lista en pocos días; luego se ajusta según tus comentarios.</p></details>
+    <details><summary>¿Mis datos quedan seguros?</summary><p>Las herramientas internas se mantienen privadas y solo comparto lo que tú decidas publicar.</p></details>
+  </div>
+</section>
+
+<div class="cta" id="contacto">
+  <h2 class="rv">Dale vida a tu idea</h2>
+  <p class="sec-sub rv" style="margin:0 auto 32px">Cuéntame qué quieres automatizar o construir.</p>
+  <a class="btn rv" id="contactBtn" href="#">✦ Escríbeme</a>
+</div>
+<footer>© <span id="y"></span> J.V.SOFT... · Programando ideas desde 1986</footer>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script>
+/* ====== ESCENA 3D DE LA PORTADA ====== */
+(function(){
+ if(typeof THREE==='undefined')return;
+ const cvs=document.getElementById('gl'),hero=document.querySelector('.hero');
+ let ren;try{ren=new THREE.WebGLRenderer({canvas:cvs,antialias:true,alpha:true})}catch(e){return}
+ ren.setPixelRatio(Math.min(devicePixelRatio||1,2));
+ const sc=new THREE.Scene(),cam=new THREE.PerspectiveCamera(50,1,.1,100);cam.position.z=9;
+ const grp=new THREE.Group();sc.add(grp);
+ const knot=new THREE.Mesh(new THREE.TorusKnotGeometry(2.1,.62,220,36,2,3),
+   new THREE.MeshStandardMaterial({color:0x0a1a33,metalness:.9,roughness:.25}));
+ const wire=new THREE.Mesh(new THREE.TorusKnotGeometry(2.1,.64,90,14,2,3),
+   new THREE.MeshBasicMaterial({color:0x22c8ff,wireframe:true,transparent:true,opacity:.28}));
+ grp.add(knot,wire);
+ const cols=[0x22c8ff,0x1e6cff,0xffffff],orbs=[];
+ for(let i=0;i<46;i++){
+  const m=new THREE.Mesh(i%2?new THREE.OctahedronGeometry(.11):new THREE.BoxGeometry(.16,.16,.16),
+    new THREE.MeshStandardMaterial({color:cols[i%3],emissive:cols[i%3],emissiveIntensity:.8}));
+  m.userData={r:3.6+Math.random()*2.8,a:Math.random()*6.28,y:(Math.random()-.5)*5,v:.15+Math.random()*.4};
+  orbs.push(m);sc.add(m);
+ }
+ sc.add(new THREE.AmbientLight(0x6070a0,.6));
+ [[0x22c8ff,-6,4,4],[0x1e6cff,6,-2,3],[0x7be7ff,0,-5,5]].forEach(l=>{const p=new THREE.PointLight(l[0],70,40);p.position.set(l[1],l[2],l[3]);sc.add(p)});
+ let tx=0,ty=0,mx=0,my=0,vis=true,w=0,h=0;
+ function size(){w=hero.clientWidth;h=hero.clientHeight;ren.setSize(w,h,false);cam.aspect=w/h;cam.updateProjectionMatrix();
+  grp.position.x=w>900?4.6:0;grp.position.y=w>900?0:-4;grp.scale.setScalar(w>900?.85:.8)}
+ addEventListener('resize',size);size();
+ addEventListener('pointermove',e=>{tx=e.clientX/innerWidth-.5;ty=e.clientY/innerHeight-.5});
+ new IntersectionObserver(e=>vis=e[0].isIntersecting).observe(hero);
+ const calma=matchMedia('(prefers-reduced-motion:reduce)').matches,clk=new THREE.Clock();
+ function frame(){
+  const t=clk.getElapsedTime();mx+=(tx-mx)*.05;my+=(ty-my)*.05;
+  if(vis){
+   knot.rotation.set(t*.18+my*1.2,t*.25+mx*1.6,0);wire.rotation.copy(knot.rotation);
+   grp.position.y+=((w>900?0:-4)+Math.sin(t*.8)*.18-grp.position.y)*.05;
+   orbs.forEach(o=>{const d=o.userData,a=d.a+t*d.v;o.position.set(Math.cos(a)*d.r+grp.position.x,d.y+Math.sin(t*d.v*2)*.3,Math.sin(a)*d.r);o.rotation.x=t;o.rotation.y=t*.7});
+   cam.position.y=-scrollY*.004;
+   ren.render(sc,cam);
+  }
+  if(!calma)requestAnimationFrame(frame);
+ }
+ frame();cvs.classList.add('on');
+})();
+</script>
+<script>
+/* ====== LOGO J.V.SOFT... EN 3D (píxeles hechos cubos) ====== */
+(function(){
+ if(typeof THREE==='undefined')return;
+ const cv=document.getElementById('l3'),wrap=cv.parentElement;
+ let ren;try{ren=new THREE.WebGLRenderer({canvas:cv,antialias:true,alpha:true})}catch(e){return}
+ ren.setPixelRatio(Math.min(devicePixelRatio||1,2));
+ const F={
+  J:["00111","00010","00010","00010","00010","10010","01100"],
+  V:["10001","10001","10001","10001","10001","01010","00100"],
+  S:["01111","10000","10000","01110","00001","00001","11110"],
+  O:["01110","10001","10001","10001","10001","10001","01110"],
+  F:["11111","10000","10000","11110","10000","10000","10000"],
+  T:["11111","00100","00100","00100","00100","00100","00100"],
+  '.':["0","0","0","0","0","0","1"]};
+ const WH=new THREE.Color(0xffffff),CY=new THREE.Color(0x22c8ff),BL=new THREE.Color(0x1e6cff);
+ const items=[];
+ /* rayas inclinadas */
+ [4,5,6,7,8].forEach((len,k)=>{const y=6.4-k*1.6,sk=(y-3)*.9;for(let i=0;i<len;i++)items.push({x:sk+i,y,c:BL.clone().lerp(CY,k/5),sy:.5})});
+ /* letras */
+ let cx=12;
+ [['J',0],['.',0],['V',0],['.',0],['S',1],['O',1],['F',1],['T',1],['.',1],['.',1],['.',1]].forEach(([ch,cy])=>{
+  const g=F[ch];g.forEach((row,r)=>[...row].forEach((v,c)=>{if(v==='1')items.push({x:cx+c,y:6-r,c:cy?CY:WH,sy:1})}));cx+=g[0].length+1});
+ let minX=1e9,maxX=-1e9;items.forEach(i=>{minX=Math.min(minX,i.x);maxX=Math.max(maxX,i.x)});
+ const span=maxX-minX,mid=(minX+maxX)/2;
+ const geo=new THREE.BoxGeometry(.9,.9,.9);
+ const mat=new THREE.MeshStandardMaterial({metalness:.35,roughness:.35,emissive:0x021018});
+ const mesh=new THREE.InstancedMesh(geo,mat,items.length);
+ const sc=new THREE.Scene(),grp=new THREE.Group();sc.add(grp);grp.add(mesh);
+ items.forEach((it,i)=>{
+  it.x-=mid;it.y-=3;
+  const a=Math.random()*6.283,b=Math.acos(2*Math.random()-1),R=28+Math.random()*30;
+  it.s={x:Math.sin(b)*Math.cos(a)*R,y:Math.sin(b)*Math.sin(a)*R,z:Math.cos(b)*R};
+  it.d=(it.x+span/2)/span*1.8+Math.random()*.35;it.sp=(Math.random()-.5)*8;
+  mesh.setColorAt(i,it.c)});
+ mesh.instanceColor.needsUpdate=true;
+ const lineMat=new THREE.MeshBasicMaterial({color:0x22c8ff});
+ const l1=new THREE.Mesh(new THREE.BoxGeometry(span+6,.3,.5),lineMat),l2=l1.clone();
+ l1.position.y=5.6;l2.position.y=-5.6;grp.add(l1,l2);
+ sc.add(new THREE.AmbientLight(0x88aacc,.8));
+ const dl=new THREE.DirectionalLight(0xffffff,1.1);dl.position.set(6,10,14);sc.add(dl);
+ [[0x22c8ff,-25,6,12],[0x1e6cff,25,-6,12]].forEach(l=>{const p=new THREE.PointLight(l[0],45,80);p.position.set(l[1],l[2],l[3]);sc.add(p)});
+ const cam=new THREE.PerspectiveCamera(40,1,.1,300);
+ function size(){const w=wrap.clientWidth,h=wrap.clientHeight;ren.setSize(w,h,false);cam.aspect=w/h;
+  const half=(span/2+10),dist=Math.max(half/(Math.tan(cam.fov*Math.PI/360)*cam.aspect),14);cam.position.set(0,0,dist);cam.updateProjectionMatrix()}
+ addEventListener('resize',size);size();
+ let t0=null,vis=false,tx=0,ty=0,mx=0,my=0;const clk=new THREE.Clock(),dm=new THREE.Object3D();
+ const calma=matchMedia('(prefers-reduced-motion:reduce)').matches;
+ new IntersectionObserver(e=>{vis=e[0].isIntersecting;if(vis&&t0===null)t0=clk.getElapsedTime()},{threshold:.3}).observe(wrap);
+ wrap.addEventListener('click',()=>{t0=clk.getElapsedTime()});
+ addEventListener('pointermove',e=>{const r=wrap.getBoundingClientRect();tx=(e.clientX-r.left)/r.width-.5;ty=(e.clientY-r.top)/r.height-.5});
+ function frame(){
+  const t=clk.getElapsedTime();
+  if(vis){
+   const T=calma?99:t-(t0===null?t:t0);
+   mx+=(tx-mx)*.06;my+=(ty-my)*.06;
+   grp.rotation.y=mx*.7;grp.rotation.x=my*.35;
+   items.forEach((it,i)=>{
+    const p=Math.min(Math.max((T-it.d)/1.5,0),1),e=1-Math.pow(1-p,3),k=1-e;
+    const wave=p>=1&&!calma?Math.sin(t*1.8+it.x*.3)*.3:0;
+    dm.position.set(it.s.x*k+it.x*e,it.s.y*k+it.y*e,it.s.z*k+wave);
+    dm.rotation.set(k*it.sp,k*it.sp*.7,0);
+    dm.scale.set(.3+.7*e,(.3+.7*e)*it.sy,.3+.7*e);
+    dm.updateMatrix();mesh.setMatrixAt(i,dm.matrix)});
+   mesh.instanceMatrix.needsUpdate=true;
+   const lp=Math.min(Math.max((T-1.2)/1.2,0),1);l1.scale.x=l2.scale.x=Math.max(lp,.001);
+   ren.render(sc,cam);
+  }
+  if(!calma)requestAnimationFrame(frame);else if(vis)ren.render(sc,cam);
+ }
+ frame();
+ if(calma)new IntersectionObserver(()=>frame()).observe(wrap);
+})();
+</script>
+<script>
+/* ====== CONFIGURA AQUÍ ====== */
+const CONTACTO = "https://wa.me/56963335779?text=" + encodeURIComponent("Hola, vi tu página de J.V.SOFT y quiero conversar sobre un proyecto.");
+const PALABRAS = ["software","dashboards","automatizaciones","apps web","cursos"];
+/* ============================ */
+document.getElementById('y').textContent=new Date().getFullYear();
+const cb=document.getElementById('contactBtn');
+if(CONTACTO){cb.href=CONTACTO;cb.target='_blank';cb.rel='noopener'}else cb.onclick=e=>{e.preventDefault();alert('Configura tu contacto en la variable CONTACTO al inicio del script.')};
+/* aparecer al hacer scroll */
+const io=new IntersectionObserver(es=>es.forEach(x=>{if(x.isIntersecting){x.target.classList.add('on');io.unobserve(x.target)}}),{threshold:.15});
+document.querySelectorAll('.rv').forEach(el=>io.observe(el));
+/* palabra rotativa */
+const rot=document.getElementById('rot');let pi=0;
+setInterval(()=>{rot.classList.add('out');setTimeout(()=>{pi=(pi+1)%PALABRAS.length;rot.textContent=PALABRAS[pi];rot.classList.remove('out')},350)},2400);
+/* partículas */
+const cv=document.getElementById('cv'),cx=cv.getContext('2d');let W,H,pts=[],m={x:-999,y:-999};
+function size(){const r=devicePixelRatio||1;W=cv.clientWidth;H=cv.clientHeight;cv.width=W*r;cv.height=H*r;cx.setTransform(r,0,0,r,0,0);
+ pts=[];const gap=34;for(let x=gap/2;x<W;x+=gap)for(let y=gap/2;y<H;y+=gap)pts.push({ox:x,oy:y,x,y,s:Math.random()*6.3})}
+addEventListener('resize',size);size();
+document.querySelector('.hero').addEventListener('pointermove',e=>{const r=cv.getBoundingClientRect();m.x=e.clientX-r.left;m.y=e.clientY-r.top});
+const calma=matchMedia('(prefers-reduced-motion:reduce)').matches;
+function draw(t){cx.clearRect(0,0,W,H);
+ for(const p of pts){const dx=p.ox-m.x,dy=p.oy-m.y,d=Math.hypot(dx,dy),f=Math.max(0,1-d/140);
+  p.x+=(p.ox+dx/(d||1)*f*26-p.x)*.12;p.y+=(p.oy+dy/(d||1)*f*26-p.y)*.12;
+  const tw=.25+.2*Math.sin(t/900+p.s);
+  cx.fillStyle=f>0?`rgba(${34+f*90|0},${200+f*30|0},255,${.5+f*.5})`:`rgba(120,190,230,${tw})`;
+  cx.beginPath();cx.arc(p.x,p.y,1.1+f*2.2,0,6.283);cx.fill()}
+ if(!calma)requestAnimationFrame(draw)}
+requestAnimationFrame(draw);
+</script>
+</body>
+</html>
