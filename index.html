@@ -15,17 +15,23 @@
 .term{margin-top:46px;font:22px/1 'VT323',monospace;letter-spacing:.1em;color:#cfe3f0}
 .cur{color:var(--blue);animation:parp 1s steps(1) infinite}@keyframes parp{50%{opacity:0}}
 .hero::after{content:"";position:absolute;inset:0;pointer-events:none;z-index:2;background:repeating-linear-gradient(0deg,rgba(0,0,0,.28) 0 1px,transparent 1px 3px);opacity:.35}
-#splash{position:fixed;inset:0;z-index:100;background:#000;display:grid;place-items:center;cursor:pointer;transition:opacity .8s}
+#splash{position:fixed;inset:0;z-index:100;padding:2.4vmin;cursor:pointer;transition:opacity .8s;
+ background:repeating-linear-gradient(0deg,#22c8ff 0 5px,#000 5px 9px,#1e6cff 9px 17px,#7be7ff 17px 20px,#000 20px 26px);animation:cinta .3s steps(5) infinite}
+#splash.ready{background:#000;animation:none}
+@keyframes cinta{to{background-position:0 26px}}
+.sp-in{width:100%;height:100%;background:#000;display:flex;flex-direction:column;align-items:center;justify-content:center}
+.boot{width:min(900px,92vw);margin-top:5vh;font:clamp(16px,2.6vw,28px)/1.35 'VT323','Courier New',monospace;letter-spacing:.06em;color:var(--blue);text-shadow:0 0 8px rgba(34,200,255,.6)}
+.boot div{min-height:1.35em;white-space:pre}
 .lg{width:min(900px,92vw);animation:enciende 1.6s both}
 .lg-box{font-size:clamp(18px,5.6vw,60px);display:flex;align-items:center;gap:.7em;padding:.55em 0;border-top:.07em solid var(--blue);border-bottom:.07em solid var(--blue);box-shadow:0 0 30px rgba(34,200,255,.25)}
 .lg-box .st{gap:.09em;transform:skewX(-28deg);margin-left:.2em}
 .lg-box .st b{height:.14em;background:linear-gradient(90deg,var(--vio),var(--blue))}
 .lg-box .st b:nth-child(1){width:.7em}.lg-box .st b:nth-child(2){width:.85em}.lg-box .st b:nth-child(3){width:1em}.lg-box .st b:nth-child(4){width:1.15em}.lg-box .st b:nth-child(5){width:1.3em}
 .lg-t{font-size:1em;white-space:nowrap;text-shadow:0 0 18px rgba(34,200,255,.6)}
-.lg-tag{display:flex;align-items:center;gap:2vw;margin-top:7vh}
+.lg-tag{display:flex;align-items:center;gap:2vw;margin-top:5vh}
 .lg-tag i{flex:1;height:2px;background:var(--vio);box-shadow:0 0 8px var(--vio)}
 .lg-tag span{font:clamp(14px,2.7vw,30px)/1 'VT323',monospace;letter-spacing:.32em;color:var(--blue);text-shadow:0 0 10px var(--blue);white-space:nowrap}
-.lg-foot{text-align:right;margin-top:9vh;font:clamp(14px,2.2vw,24px)/1 'VT323',monospace;letter-spacing:.1em;color:#cfe3f0}
+.lg-foot{text-align:right;margin-top:3vh;font:clamp(14px,2.2vw,24px)/1 'VT323',monospace;letter-spacing:.1em;color:#cfe3f0}
 #splash.off{opacity:0;pointer-events:none}
 @keyframes enciende{0%{opacity:0;filter:brightness(3) blur(6px)}30%{opacity:1}45%{opacity:.4}60%,100%{opacity:1;filter:none}}
 *{box-sizing:border-box}html{scroll-behavior:smooth}
@@ -96,16 +102,35 @@ footer{border-top:1px solid var(--line);padding:30px 22px;text-align:center;colo
 </style>
 </head>
 <body>
-<div id="splash"><div class="lg" role="img" aria-label="J.V.SOFT... Programando ideas desde 1986">
+<div id="splash"><div class="sp-in"><div class="lg" role="img" aria-label="J.V.SOFT... Programando ideas desde 1986">
   <div class="lg-box"><span class="st"><b></b><b></b><b></b><b></b><b></b></span><span class="lg-t px"><u>J.V.</u>SOFT...</span></div>
   <div class="lg-tag"><i></i><span>PROGRAMANDO IDEAS DESDE 1986</span><i></i></div>
   <div class="lg-foot">BASICAMENTE... SIEMPRE <span class="cur">_</span></div>
+</div>
+<div class="boot" id="boot"><div></div><div></div><div></div></div>
 </div></div>
 <script>
 (function(){const s=document.getElementById('splash');let visto=false;try{visto=sessionStorage.getItem('jv')}catch(e){}
  if(visto||matchMedia('(prefers-reduced-motion:reduce)').matches){s.remove();return}
- const cerrar=()=>{s.classList.add('off');setTimeout(()=>s.remove(),900);try{sessionStorage.setItem('jv','1')}catch(e){}};
- s.onclick=cerrar;setTimeout(cerrar,2800)})();
+ let hecho=false;
+ const cerrar=()=>{if(hecho)return;hecho=true;s.classList.add('off');setTimeout(()=>s.remove(),900);try{sessionStorage.setItem('jv','1')}catch(e){}};
+ s.onclick=cerrar;addEventListener('keydown',cerrar,{once:true});
+ /* carga estilo computador de los 80 */
+ const L=document.getElementById('boot').children,N=24,sleep=ms=>new Promise(r=>setTimeout(r,ms));
+ (async()=>{
+  await sleep(900);
+  for(const ch of 'LOAD "J.V.SOFT..."'){if(hecho)return;L[0].textContent+=ch;await sleep(55)}
+  await sleep(350);
+  let p=0;
+  while(p<100){if(hecho)return;p=Math.min(100,p+Math.random()*9+1);
+   const n=Math.round(p/100*N);
+   L[1].textContent='['+'█'.repeat(n)+'░'.repeat(N-n)+'] '+String(Math.floor(p)).padStart(3,' ')+'%';
+   await sleep(60+Math.random()*140)}
+  if(hecho)return;
+  s.classList.add('ready');L[2].innerHTML='READY. <span class="cur">_</span>';
+  await sleep(750);cerrar();
+ })();
+})();
 </script>
 <header>
   <nav><a href="#como">Cómo trabajo</a><a href="#faq">Preguntas</a><a href="#contacto">Contacto</a></nav>
